@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+@model QrMenu.ModelsLayer.Models.Category.CategoryCrudViewModel
+<div class="fixed-action-btn">
+    <a href="#AddEdit" class="btn-floating btn-large modal-trigger red" id="addButton">
+        <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<div class="page-titles">
+    <div class="d-flex align-items-center">
+        <h5 class="font-medium m-b-0">Kategoriler</h5>
+        <div class="custom-breadcrumb ml-auto">
+            <a href="/Admin/" class="breadcrumb">Anasayfa</a>
+            <a href="#!" class="breadcrumb">Kategoriler</a>
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <h5 class="card-title">Kategori Listesi</h5>
+                    <p></p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+
+                                    <th style="width:20px;text-align:center"></th>
+                                    <th>Kategori Adı</th>
+                                    <th>Bağlı İçerik Sayısı</th>
+
+                                    <th style="width:20px;text-align:center"></th>
+                                    <th style="width:20px;text-align:center"></th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.CategoriesViewModel)
+                                {
+
+                                    <tr>
+                                        <td><img class="materialboxed" width="30" src="@item.Image"></td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Meals.Count</td>
+
+                                        <td>
+                                            <a href="/Admin/Category?editId=@item.Id" class="waves-effect waves-light btn-small green"><i class="material-icons">edit</i></a>
+                                        </td>
+                                        <td>
+                                            <a href="/Admin/Category/Delete/@item.Id" class="waves-effect waves-light btn-small delete" style="background-color:#E06B55"><i class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="AddEdit" class="modal modal-fixed-footer" data-keyboard="false" data-backdrop="static">
+    <form asp-action="AddEdit" id="Add_Form">
+        <div class="modal-content">
+            <input hidden id="Id" length="120" asp-for="@Model.CategoryViewModel!.Id" name="Id">
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="Name" type="text" asp-for="@Model.CategoryViewModel.Name" name="Name">
+                    <label for="Name">Kategori Adı</label>
+                </div>
+                <div class="input-field col s12">
+                    <div class="file-field input-field">
+                        <div class="btn blue darken-1">
+                            <span>Fotoğraf</span>
+                            <input type="file" name="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn green waves-effect waves-green ">
+                Gönder
+            </button>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn red ">Kapat</a>
+        </div>
+    </form>
+
+</div>
